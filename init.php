@@ -1,5 +1,17 @@
-<?php session_start();
+<?php 
+session_start();
 $conn = mysqli_connect('localhost', 'root', 'dimasql', 'lesten');
-$user = isset(($_SESSION['uaser']) ? $_SESSION['uaser'] : NULL);
-// TPL_DIR = 'tpl';
-include 'tpl/base.php';
+// function create_connection()
+// {
+// 	$conn = mysqli_connect('localhost', 'root', 'dimasql', 'lesten');
+// 	$get_connection = function() use ($conn){
+// 		return $conn;
+// 	};
+// 	return $get_connection;
+// }
+
+// $GET_CONN = create_connection();
+
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : NULL;
+
+require 'functions.php';
