@@ -6,3 +6,4 @@ $render_content = function(){
 };
 
 require 'tpl/base.html';
+?>

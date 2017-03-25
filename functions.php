@@ -19,8 +19,10 @@ function register_user($user_array){
 	mysqli_query($conn, 
 		"INSERT INTO users(name, pass, is_admin) VALUES('{$name}', '{$pass}', {$is_admin})");
 	if (!mysqli_error($conn)) {
-		header('Location: /kolyanphp/lesson10/ ');
-		exit();
+		login_user([
+			'name' => $name,
+			'pass' => $user_array['pass']
+			]);
 	} else {
 		echo  mysqli_error($conn);
 	}
@@ -29,6 +31,7 @@ function login_user ($user_array){
 	global $conn;
 	$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE name = '{$user_array['name']}'"));
 	if ($user && password_verify($user_array['pass'], $user['pass'])){
+		$_SESSION['messages'][]=['success', 'You are successfully logged in'];
 		unset($user['pass']);
 		$_SESSION['user'] = $user;
 		header('Location: /kolyanphp/lesson10/');
@@ -36,7 +39,8 @@ function login_user ($user_array){
 	}
 }
 function logout_user(){
-	session_destroy();
+	unset($_SESSION['user']);
+	$_SESSION['messages'][]=['danger', 'You are logged out'];
 	header('Location: /kolyanphp/lesson10/');
 	exit();
 }
