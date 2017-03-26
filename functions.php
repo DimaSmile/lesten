@@ -1,5 +1,4 @@
-<?php  
-
+<?php
 function handle_user_request (){
 	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['password'])) {
 		return  [
@@ -34,14 +33,63 @@ function login_user ($user_array){
 		$_SESSION['messages'][]=['success', 'You are successfully logged in'];
 		unset($user['pass']);
 		$_SESSION['user'] = $user;
-		header('Location: /kolyanphp/lesson10/');
-		exit();
+		end_and_home();
 	}
 }
 function logout_user(){
 	unset($_SESSION['user']);
-	$_SESSION['messages'][]=['danger', 'You are logged out'];
-	header('Location: /kolyanphp/lesson10/');
+	$_SESSION['messages'][]=['success', 'You are logged out'];
+	end_and_home();
+}
+
+function only_for_admin(){
+	global $user;
+	if (!$user || !$user['is_admin']) {
+		$_SESSION['messages'][]=['danger', 'Only admins allowed to visible this page'];
+		end_and_home();
+	}
+}
+
+function end_and_home(){
+	header('Location: /kolyanphp/lesson10/index.php');
 	exit();
 }
 
+function get_name_from_post(){
+	if (isset($_POST['name'])) {
+		return $_POST['name'];
+	}
+	return NULL;
+}
+
+function save_category($name){
+	global $conn;
+	if(strlen($name)){
+		mysqli_query($conn, "INSERT INTO categories(name) VALUE('{$name}')");
+		if (mysqli_error($conn)){
+			$_SESSION['messages'][]=['warning', "Category '{$name}' already exists"];	
+		}else{
+			$_SESSION['messages'][]=['success', "Category '{$name}' has been saved"];
+		}
+	}else{
+		$_SESSION['messages'][]=['danger', 'Name too short'];	
+	}
+	header('Location: ' . $_SERVER['REQUEST_URI']);
+	exit();
+}
+
+function save_maker($name){
+	global $conn;
+	if(strlen($name)){
+		mysqli_query($conn, "INSERT INTO makers(name) VALUE('{$name}')");
+		if (mysqli_error($conn)) {
+			$_SESSION['messages'][]=['warning', "Maker '{$name}' already exists"];	
+		}else{
+			$_SESSION['messages'][]=['success', "Maker '{$name}' has been saved"];	
+		}
+	}else{
+		$_SESSION['messages'][]=['danger', 'Name too short'];	
+	}
+	header('Location: ' . $_SERVER['REQUEST_URI']);
+	exit();
+}

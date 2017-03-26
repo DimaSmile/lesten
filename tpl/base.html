@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="">
 	<head>
 		<meta charset="utf-8">
@@ -26,14 +26,25 @@
 				</li>
 				<?php if ($user): ?>
 					<li>
-						<a href="../lesson10/logout.php">Logout</a>
+						<a href="/kolyanphp/lesson10/logout.php">Logout</a>
 					</li>
+					<?php if ($user['is_admin']):?>
+						<li>
+							<a href="/kolyanphp/lesson10/admin/add_category.php">Add Category</a>
+						</li>
+						<li>
+							<a href="/kolyanphp/lesson10/admin/add_maker.php">Add Maker</a>
+						</li>
+						<li>
+							<a href="/kolyanphp/lesson10/admin/add_item.php">Add Item</a>
+						</li>
+					<?php endif;?>
 				<?php else: ?>
 					<li>
-						<a href="../lesson10/register.php">Register</a>
+						<a href="/kolyanphp/lesson10/register.php">Register</a>
 					</li>
 					<li>
-						<a href="../lesson10/login.php">Login</a>
+						<a href="/kolyanphp/lesson10/login.php">Login</a>
 					</li>
 
 				<?php endif ?>
