@@ -93,3 +93,34 @@ function save_maker($name){
 	header('Location: ' . $_SERVER['REQUEST_URI']);
 	exit();
 }
+
+
+
+function get_item_from_post(){
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		foreach (['model', 'category', 'maker'] as $var) {
+			if(isset($_POST[$var])){
+				$$var = $_POST[$var];
+			}else{
+				$$var = NULL;
+			}
+		}
+		if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+			$destination = "/kolyanphp/lesson10/public/" . time() . str_replace(' ','',$_FILES['image']['name']);
+			move_uploaded_file($_FILES['image']['tmp_name'], "../../.." . $destination);
+		}else{
+			$destination = NULL;
+		}
+		return [
+				'model' => $model,
+				'category' => $category,
+				'maker' => $maker,
+				'image_path' => $destination,
+		];
+	}
+}
+
+
+function save_item($item){
+	var_dump($item);
+}
