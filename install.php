@@ -29,7 +29,5 @@ mysqli_query($conn,
 	model CHAR(20) UNIQUE NOT NULL,
 	image_path CHAR(255),
 	maker_id INT,
-	category_id INT
-	)"
+	category_id INT)"
 );
-?>
