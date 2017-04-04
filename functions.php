@@ -135,3 +135,31 @@ function save_item($item){
 	header('Location: ' . $_SERVER['REQUEST_URI']);
 	exit();
 }
+
+function get_comment_from_post(){
+	global $user;
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$content = isset($_POST['content']) ? $_POST['content'] : '';
+		$user_id = $user['id'];
+		return[
+			'content' => $content,
+			'author' => $user_id,
+			'item' =>  $_GET['id']
+		]; 
+	}
+}
+
+function save_comment($c){
+	global $conn;
+	if ($c) {
+		mysqli_query($conn, "INSERT INTO comments(content, author_id, item_id)
+			VALUES('{$c['content']}', {$c['author']}, {$c['item']})");
+			if (mysqli_error($conn)) {
+					$_SESSION['messages'][]=['danger', mysqli_error($conn)];	
+				}else{
+					$_SESSION['messages'][]=['success', 'Comment added'];	
+				}
+				header('Location: ' . $_SERVER['REQUEST_URI']);
+				exit();
+	}
+}

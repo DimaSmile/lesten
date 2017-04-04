@@ -31,3 +31,11 @@ mysqli_query($conn,
 	maker_id INT,
 	category_id INT)"
 );
+
+mysqli_query($conn, 
+	"CREATE TABLE IF NOT EXISTS comments(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	content TEXT NOT NULL,
+	author_id INT,
+	item_id INT)"
+);

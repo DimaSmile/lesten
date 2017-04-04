@@ -1,0 +1,6 @@
+<?php foreach ($comments as $comment): ?>
+	<div class="well well-sm">
+		<span class="label label-info"><?= $comment['author']; ?></span>
+		<em><?= $comment['content']; ?></em>
+	</div>
+<?php endforeach ?>

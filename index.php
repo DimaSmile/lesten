@@ -16,7 +16,7 @@ $render_content = function(){
 	}
 
 	$final_condition = count($where_condition) ? "WHERE "  . implode("AND ", $where_condition) : '';
-	$items = mysqli_query($conn, "SELECT model, image_path, categories.name AS category, makers.name AS maker 
+	$items = mysqli_query($conn, "SELECT items.id AS id, model, image_path, categories.name AS category, makers.name AS maker 
 		FROM items JOIN categories ON items.category_id = categories.id
 		JOIN makers ON items.maker_id = makers.id " . $final_condition);
 	
